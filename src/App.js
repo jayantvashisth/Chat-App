@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import Sidebar from './components/Sidebar';
+import Chat from './components/Chat';
 
 function App() {
     return (
@@ -8,9 +9,9 @@ function App() {
             {/* <h1>whatsapp this sids</h1> */}
 
             <div className="app_body">
-                
-                <Sidebar/ >
 
+                <Sidebar />
+                <Chat />
                 {/* header */}
                 {/* chat area */}
 
