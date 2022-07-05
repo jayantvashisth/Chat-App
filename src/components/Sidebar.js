@@ -11,15 +11,16 @@ import db from './firebase';
 
 const Sidebar = () => {
 
-    const [rooms, setrooms] = useState([]);
+    const [rooms, setrooms] = useState([{name : ""}]);
 
-    // useEffect(() => {
-    // }, [])
+    useEffect(() => {
+        Fetchdata()
+    }, [])
 
-    window.addEventListener('load', () => {
-        Fetchdata();
+    // window.addEventListener('load', () => {
+    //     Fetchdata();
 
-    });
+    // });
 
     // Fetch the required data using the get() method
     const Fetchdata = () => {
@@ -34,7 +35,7 @@ const Sidebar = () => {
             });
         })
 
-        // console.log(rooms);
+        console.log(rooms);
     }
     // console.log(rooms);
 
@@ -68,9 +69,9 @@ const Sidebar = () => {
             <div className="sidebar_chats">
                 <SidebarChat addNewChat />
                 <SidebarChat />
-                {rooms.map(room => (
+                {/* {rooms.map(room => (
                     <SidebarChat key={room.id} id = {room.id} name = {room.data.name} />
-                ))}
+                ))} */}
 
             </div>
         </div>
