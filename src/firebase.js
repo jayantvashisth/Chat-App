@@ -1,7 +1,12 @@
-import firebase from "./firebase";
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import {getAuth} from "firebase/auth"
+// import firebase from './fire'
+
 
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Jayant Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyBjNXoa0iNxwe3CNUuyfyVLDMMHbGNUm-I",
     authDomain: "whatsapp-clone-3fe64.firebaseapp.com",
@@ -12,11 +17,27 @@ const firebaseConfig = {
     measurementId: "G-9NVYZSNCRF"
   };
 
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+//Navneet's database
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDREOdI6ycZSCmtvbyOHAohF7p-ENcMIas",
+//     authDomain: "whatsapp-clone-f7b49.firebaseapp.com",
+//     projectId: "whatsapp-clone-f7b49",
+//     storageBucket: "whatsapp-clone-f7b49.appspot.com",
+//     messagingSenderId: "468349954236",
+//     appId: "1:468349954236:web:eed1eba53f7c5b39c148b9",
+//     measurementId: "G-4RVE8QSKD9"
+//   };
 
-  const firebaseApp = firebase.initializeApp(firebaseConfig);
-  const db = firebaseApp.firestore();
-  const auth = firebase.auth();
-  const provider = new firebase.auth.GoogleAuthProvider();
 
-  export {auth , provider};
+
+
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db =getFirestore(firebaseApp);
+  
+ 
+  const authorization = getAuth(firebaseApp);
+  // const provider = new firebase.GoogleAuthProvider();
+
+  export {authorization};
   export default db;

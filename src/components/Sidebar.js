@@ -8,20 +8,35 @@ import ChatIcon from '@mui/icons-material/Chat';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 import db from '../firebase';
+import {
+    collection,
+    onSnapshot,
+    getDocs,
+    Timestamp,
+    doc,
+    setDoc,
+  } from "firebase/firestore";
 
 export default function Sidebar() {
-
     const [rooms, setrooms] = useState([]);
-
-    useEffect(() =>{
-        db.collection('rooms').onSnapshot(snapshot =>(
-            setrooms(snapshot.docs.map(doc => ({
-                id: doc.id,
-                data: doc.data(),
-            })))
-        ))
+    async function getdata () {
+        let finalresult=[];
+        console.log("Pre list",finalresult)
+        const querySnapshot = await getDocs(collection(db, "rooms"));
+         querySnapshot.forEach((doc) => {
+        finalresult.push(doc.data());
+        });
+        setrooms(finalresult)
+        console.log(finalresult)
+        
+      }
+    useEffect(() => {
+       getdata();
     }, [])
     
+
+    
+
 
     return (
         <div className="sidebar">
@@ -50,8 +65,11 @@ export default function Sidebar() {
 
             <div className="sidebar_chats">
                 <SidebarChat addNewChat/>
-                {rooms.map(room => (
-                    <SidebarChat key={room.id} id = {room.id} name = {room.data.name} />
+          
+                {
+                   
+                rooms.map(room => (
+                    <SidebarChat key={room.id} name = {room.name} />
                 ))}
                 
             </div>

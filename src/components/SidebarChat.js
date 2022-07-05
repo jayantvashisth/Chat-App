@@ -7,13 +7,13 @@ import './SidebarChat.css'
 export const SidebarChat = ({addNewChat, id, name}) => {
  
     const createChat = () => {
-        const roomName = prompt("please enter name for your chat");
-        console.log(roomName)
+        // const roomName = prompt("please enter name for your chat");
+        // console.log(roomName)
     
-        if(roomName){
+        // if(roomName){
     
-            // do some database stuff here
-        }
+        //     // do some database stuff here
+        // }
     }
     const [seed, setseed] = useState("")
     useEffect(()=>{
