@@ -1,27 +1,44 @@
 import React, { useEffect, useState } from 'react'
-import './Sidebar.css'  
-import { SidebarChat } from './SidebarChat';
+import './Sidebar.css'
+import SidebarChat from './SidebarChat';
 import { IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import ChatIcon from '@mui/icons-material/Chat';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
-import db from '../firebase';
+import db from './firebase';
 
-export default function Sidebar() {
+const Sidebar = () => {
 
     const [rooms, setrooms] = useState([]);
 
-    useEffect(() =>{
-        db.collection('rooms').onSnapshot(snapshot =>(
-            setrooms(snapshot.docs.map(doc => ({
-                id: doc.id,
-                data: doc.data(),
-            })))
-        ))
-    }, [])
-    
+    // useEffect(() => {
+    // }, [])
+
+    window.addEventListener('load', () => {
+        Fetchdata();
+
+    });
+
+    // Fetch the required data using the get() method
+    const Fetchdata = () => {
+        db.collection("rooms").get().then((querySnapshot) => {
+
+            // Loop through the data and store
+            // it in array to display
+            querySnapshot.forEach(element => {
+                var data = element.data();
+                setrooms(arr => [...arr, data]);
+
+            });
+        })
+
+        // console.log(rooms);
+    }
+    // console.log(rooms);
+
+
 
     return (
         <div className="sidebar">
@@ -49,14 +66,17 @@ export default function Sidebar() {
             </div>
 
             <div className="sidebar_chats">
-                <SidebarChat addNewChat/>
+                <SidebarChat addNewChat />
+                <SidebarChat />
                 {rooms.map(room => (
                     <SidebarChat key={room.id} id = {room.id} name = {room.data.name} />
                 ))}
-                
+
             </div>
         </div>
 
 
     )
 }
+
+export default Sidebar;
