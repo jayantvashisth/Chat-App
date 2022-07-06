@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './Sidebar.css'  
+import './Sidebar.css'
 import { SidebarChat } from './SidebarChat';
 import { IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -15,27 +15,43 @@ import {
     Timestamp,
     doc,
     setDoc,
-  } from "firebase/firestore";
+} from "firebase/firestore";
+
+//reference to the collection 
+// coll = collection(db, "rooms");
+
+// onSnapshot(collection, function) ====> here the function will be fired every time when the data is changed or the snapshot is updated 
+
+
+
 
 export default function Sidebar() {
     const [rooms, setrooms] = useState([]);
-    async function getdata () {
-        let finalresult=[];
-        console.log("Pre list",finalresult)
-        const querySnapshot = await getDocs(collection(db, "rooms"));
-         querySnapshot.forEach((doc) => {
-        finalresult.push(doc.data());
-        });
-        setrooms(finalresult)
-        console.log(finalresult)
-        
-      }
-    useEffect(() => {
-       getdata();
-    }, [])
-    
+    async function getdata() {
 
-    
+        let coll = collection(db, "rooms");
+
+        onSnapshot(coll, (snapshot) => {
+            let finalresult = [];
+
+            snapshot.docs.forEach((doc) => {
+
+                finalresult.push({ ...doc.data() })
+
+            })
+            console.log(finalresult)
+            setrooms(finalresult)
+        })
+
+
+    }
+
+    useEffect(() => {
+        getdata();
+    }, [])
+
+
+
 
 
     return (
@@ -64,14 +80,14 @@ export default function Sidebar() {
             </div>
 
             <div className="sidebar_chats">
-                <SidebarChat addNewChat/>
-          
+                <SidebarChat addNewChat />
+
                 {
-                   
-                rooms.map(room => (
-                    <SidebarChat key={room.id} name = {room.name} />
-                ))}
-                
+
+                    rooms.map(room => (
+                        <SidebarChat key={room.id} name={room.name} />
+                    ))}
+
             </div>
         </div>
 
