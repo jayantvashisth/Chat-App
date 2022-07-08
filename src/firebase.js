@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import {getAuth} from "firebase/auth"
+import { getAuth } from "firebase/auth"
 // import firebase from './fire'
 
 
@@ -15,7 +15,7 @@ const firebaseConfig = {
     messagingSenderId: "1033095764026",
     appId: "1:1033095764026:web:5f9dce8090d719924c7d03",
     measurementId: "G-9NVYZSNCRF"
-  };
+};
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 //Navneet's database
@@ -32,12 +32,12 @@ const firebaseConfig = {
 
 
 
-  const firebaseApp = initializeApp(firebaseConfig);
-  const db =getFirestore(firebaseApp);
-  
- 
-  const authorization = getAuth(firebaseApp);
-  // const provider = new firebase.GoogleAuthProvider();
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
 
-  export {authorization};
-  export default db;
+
+const authorization = getAuth(firebaseApp);
+// const provider = new firebase.GoogleAuthProvider();
+
+export { authorization };
+export default db;

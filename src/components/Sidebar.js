@@ -36,10 +36,10 @@ export default function Sidebar() {
 
             snapshot.docs.forEach((doc) => {
 
-                finalresult.push({ ...doc.data() })
+                finalresult.push({ ...doc.data(), id: doc.id })
 
             })
-            console.log(finalresult)
+            console.log(finalresult[0].id)
             setrooms(finalresult)
         })
 
@@ -85,7 +85,7 @@ export default function Sidebar() {
                 {
 
                     rooms.map(room => (
-                        <SidebarChat key={room.id} name={room.name} />
+                        <SidebarChat key={room.id} id={room.id} name={room.name} />
                     ))}
 
             </div>

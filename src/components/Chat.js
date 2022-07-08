@@ -1,5 +1,5 @@
 import { Avatar } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Chat.css'
 import { IconButton } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -7,13 +7,33 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import MicIcon from '@mui/icons-material/Mic';
+import { useParams } from "react-router-dom"
+import db from '../firebase';
+import { onSnapshot, collection, doc } from 'firebase/firestore';
 
 
 
-function Chat() 
-{
+function Chat() {
     const [input, setinput] = useState("")
-    const sendMessage = (e)=>{
+    const { roomId } = useParams();
+    const [roomName, setroomName] = useState("")
+    useEffect(() => {
+        if (roomId) {
+            let coll = collection(db, "rooms")
+            onSnapshot(doc(db, "rooms", roomId), (snapshot) => {
+
+                //now ill make an array as useState hook requires a render to get updated
+
+                let finalName = []
+                finalName.push(snapshot.data().name)
+
+                setroomName(finalName)
+                console.log(roomName)
+            })
+        }
+    }, [roomId])
+
+    const sendMessage = (e) => {
         e.preventDefault();
         console.log(input)
         setinput("");
@@ -27,7 +47,7 @@ function Chat()
 
                 <Avatar />
                 <div className="chat_headerInfo">
-                    <h3>Room Name</h3>
+                    <h3>{roomName}</h3>
                     <p>last seen at..</p>
                 </div>
                 <div className="chat_headerRight">
@@ -60,7 +80,7 @@ function Chat()
             <div className="chat_footer">
                 <InsertEmoticonIcon />
                 <form >
-                    <input value={input} onChange = {(e)=> setinput(e.target.value)} type="text" placeholder='type a messade' />
+                    <input value={input} onChange={(e) => setinput(e.target.value)} type="text" placeholder='type a messade' />
                     <button onClick={sendMessage}>send a message</button>
                 </form>
                 <MicIcon />

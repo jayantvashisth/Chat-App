@@ -3,14 +3,9 @@ import db from '../firebase'
 import React, { useEffect, useState } from 'react'
 import './SidebarChat.css'
 import { collection, setDoc, doc } from "firebase/firestore";
+import { Link } from "react-router-dom"
 
 
-
-
-
-// const docRef = await addDoc(collection(db, "rooms"), {
-//     name: roomName
-// });
 
 export const SidebarChat = ({ addNewChat, id, name }) => {
 
@@ -43,13 +38,16 @@ export const SidebarChat = ({ addNewChat, id, name }) => {
 
 
     return !addNewChat ? (
-        <div className='sidebarChat'>
-            <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
-            <div className="sidebarChat_info">
-                <h2>{name}</h2>
-                <p>last message..</p>
+        <Link to={`/rooms/${id}`}>
+            <div className='sidebarChat'>
+                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+                <div className="sidebarChat_info">
+                    <h2>{name}</h2>
+                    <p>last message..</p>
+                </div>
             </div>
-        </div>
+        </Link>
+
     ) : (
         <div onClick={createChat} className="sidebarChat">
             <h2>Add New Chat</h2>

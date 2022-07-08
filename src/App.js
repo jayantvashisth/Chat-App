@@ -2,6 +2,13 @@ import './App.css';
 import React from 'react';
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link
+} from "react-router-dom";
+
 
 function App() {
     return (
@@ -10,10 +17,24 @@ function App() {
 
             <div className="app_body">
 
-                <Sidebar />
-                <Chat />
-                {/* header */}
-                {/* chat area */}
+                <Router>
+                    <Sidebar />
+
+                    <Routes>
+                        <Route exact path='/rooms/:roomId' element={<> <Chat /></>}>
+
+                            {/* <Sidebar />
+                            <Chat />
+                             */}
+
+                        </Route>
+                        <Route exact path='/' element={<Chat />}>
+
+                        </Route>
+
+                    </Routes>
+                </Router>
+
 
             </div>
         </div>
