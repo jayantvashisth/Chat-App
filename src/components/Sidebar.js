@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Sidebar.css'
 import { SidebarChat } from './SidebarChat';
-import { IconButton } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -16,6 +16,7 @@ import {
     doc,
     setDoc,
 } from "firebase/firestore";
+import { useStateValue } from '../StateProvider';
 
 //reference to the collection 
 // coll = collection(db, "rooms");
@@ -26,6 +27,9 @@ import {
 
 
 export default function Sidebar() {
+
+    const [{user}, dispatch] = useStateValue();
+
     const [rooms, setrooms] = useState([]);
     async function getdata() {
 
@@ -57,6 +61,7 @@ export default function Sidebar() {
     return (
         <div className="sidebar">
             <div className="sidebar_header">
+                <Avatar src={user?.photoURL} />
                 <AccountCircleIcon />
 
                 <div className="sidebar_headerRight">
